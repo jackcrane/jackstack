@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(cuid())
+  email String @unique
+  password String
+  name String
+
+  emailVerified Boolean @default(false)
+
+  emailVerifications EmailVerification[]
+  logs Logs[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Logs {
+  id String @id @default(cuid())
+  userId String?
+  user User? @relation(fields: [userId], references: [id])
+
+  type LogType
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Email {
+  id String @id @default(cuid())
+  messageId String
+  from String
+  to String
+  subject String
+
+  userId String?
+
+  responses EmailWebhooks[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EmailVerification {
+  id String @id @default(cuid())
+
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EmailWebhooks {
+  id String @id @default(cuid())
+  messageId String
+
+  emailId String
+  email Email @relation(fields: [emailId], references: [id])
+
+  data String
+  type EmailWebhookType
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum EmailWebhookType {
+  DELIVERY
+  OPEN
+  BOUNCE
+  SPAM_COMPLAINT
+  LINK_CLICK
+}
+
+// LogTypes are in form NOUN_VERB
+enum LogType {
+  USER_CREATED
+  USER_LOGIN
+  EMAIL_SENT
+  EMAIL_VERIFIED
+}
