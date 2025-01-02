@@ -1,6 +1,7 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useAuth } from "../hooks";
 
 export default () => {
   const { loggedIn, loading, login, user } = useAuth();
