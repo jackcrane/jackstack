@@ -1,8 +1,12 @@
 import { prisma } from "#prisma";
-import { beforeEach, vi } from "vitest";
+import { afterEach, beforeEach, vi } from "vitest";
 import bcrypt from "bcrypt";
 
 export let tc = {};
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 beforeEach(async () => {
   if (process.env.NODE_ENV === "test") {
@@ -50,14 +54,14 @@ beforeEach(async () => {
 
   vi.mock("#postmark", () => {
     return {
-      sendEmail: async () => {
+      sendEmail: vi.fn().mockImplementation(async () => {
         return {
           postmarkResponse: { MessageID: "test-message-id" },
           emailRecord: {
             id: "test-email-record-id",
           },
         };
-      },
+      }),
     };
   });
 

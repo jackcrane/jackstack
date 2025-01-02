@@ -7,7 +7,10 @@ import Handlebars from "handlebars";
 import { readFileSync } from "fs";
 import { forceTestError } from "#forceError";
 
-const welcomeEmail = readFileSync("./react-email/complete/welcome.hbs", "utf8");
+const welcomeEmail = readFileSync(
+  "../react-email/complete/welcome.hbs",
+  "utf8"
+);
 const template = Handlebars.compile(welcomeEmail);
 
 export const post = async (req, res) => {

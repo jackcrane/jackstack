@@ -8,13 +8,25 @@ import bcrypt from "bcrypt";
 import { forceTestError } from "#forceError";
 
 const template = Handlebars.compile(
-  readFileSync("./react-email/complete/forgot-password.hbs", "utf8")
+  readFileSync("../react-email/complete/forgot-password.hbs", "utf8")
 );
 
 export const get = async (req, res) => {
   try {
     forceTestError(req);
-    const { email } = req.body;
+    const { email } = req.query;
+
+    const schema = z.object({
+      email: z
+        .string({ required_error: "Email is a required field" })
+        .email("Invalid email format"),
+    });
+
+    const result = schema.safeParse({ email });
+
+    if (!result.success) {
+      return res.status(400).json({ message: result.error.issues });
+    }
 
     const user = await prisma.user.findFirst({
       where: {
@@ -32,7 +44,7 @@ export const get = async (req, res) => {
       },
     });
 
-    const { emailRecord } = await sendEmail({
+    await sendEmail({
       From: "Snowcap Support <snowcap@jackcrane.rocks>",
       To: email,
       Subject: "Password Reset",
@@ -45,7 +57,6 @@ export const get = async (req, res) => {
         type: LogType.USER_PASSWORD_RESET_REQUEST,
         userId: user.id,
         ip: req.ip,
-        emailId: emailRecord.id,
       },
     });
 
@@ -73,7 +84,11 @@ export const post = async (req, res) => {
     }
 
     const schema = z.object({
-      password: z.string().min(8),
+      password: z
+        .string({
+          required_error: "Password is a required field",
+        })
+        .min(8, { message: "Password must be at least 8 characters" }),
       token: z.string(),
     });
 

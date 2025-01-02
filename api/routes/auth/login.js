@@ -9,7 +9,7 @@ import { readFileSync } from "fs";
 import { getGeolocation } from "#geolocation";
 import { forceTestError } from "#forceError";
 
-const welcomeEmail = readFileSync("./react-email/complete/login.hbs", "utf8");
+const welcomeEmail = readFileSync("../react-email/complete/login.hbs", "utf8");
 const template = Handlebars.compile(welcomeEmail);
 
 dotenv.config();

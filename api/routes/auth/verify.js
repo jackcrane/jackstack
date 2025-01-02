@@ -36,22 +36,29 @@ export const get = async (req, res) => {
       },
     });
 
+    console.log(emailVerification.userId);
+    const user = await prisma.user.findFirst({
+      where: {
+        id: emailVerification.userId,
+      },
+    });
+
     await prisma.logs.createMany({
       data: [
         {
           type: LogType.EMAIL_VERIFIED,
-          userId: emailVerification.userId,
+          userId: user.id,
           ip: req.ip,
         },
         {
           type: LogType.USER_LOGIN,
-          userId: emailVerification.id,
+          userId: user.id,
           ip: req.ip,
         },
       ],
     });
 
-    const user = await prisma.user.update({
+    await prisma.user.update({
       where: {
         id: emailVerification.userId,
       },

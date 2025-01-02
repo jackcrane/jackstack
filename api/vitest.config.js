@@ -7,5 +7,6 @@ export default defineConfig({
       provider: "v8",
       exclude: ["config/**"],
     },
+    mockReset: true,
   },
 });

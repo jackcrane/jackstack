@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 export const gt = async (options) => {
   const ga = options?.ga || false;
   const suspended = options?.suspended || false;
-  const sat = options?.sat || null;
 
   let user =
     options?.user ||
@@ -32,22 +31,9 @@ export const gt = async (options) => {
     });
   }
 
-  if (sat) {
-    // Shop accountType
-    await prisma.userShop.updateMany({
-      where: { userId: user.id },
-      data: {
-        accountType: sat,
-      },
-    });
-  }
-
   const token = jwt.sign(
     {
       id: user.id,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
     },
     process.env.JWT_SECRET,
     { expiresIn: "3h" }
