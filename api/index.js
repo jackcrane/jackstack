@@ -24,9 +24,9 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  // if (process.env.NODE_ENV !== "test") {
-  console.log(`[${req.id}][REQUEST]`, req.method, req.url);
-  // }
+  if (process.env.NODE_ENV !== "test") {
+    console.log(`[${req.id}][REQUEST]`, req.method, req.url);
+  }
   next();
 });
 
@@ -34,6 +34,13 @@ app.use(express.json());
 
 await registerRoutes(app, path.join(process.cwd(), "routes"));
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Server listening on port ${process.env.PORT || 3000}`);
-});
+const PORT = process.env.PORT || 3000;
+let server;
+
+if (process.env.NODE_ENV !== "test") {
+  server = app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+export { app, server };
