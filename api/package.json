@@ -5,12 +5,14 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./scripts/run-integration.sh",
     "bore": "bore local 3000 --to bore.pub",
     "start": "node index.js",
     "dev": "nodemon index.js",
     "email:export": "cd react-email && yarn export",
-    "email:dev": "cd react-email && yarn dev"
+    "email:dev": "cd react-email && yarn dev",
+    "coverage": "yarn test --coverage",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
@@ -32,6 +34,14 @@
     "#prisma": "./util/prisma.js"
   },
   "devDependencies": {
-    "prisma": "6.1.0"
+    "prisma": "6.1.0",
+    "@types/supertest": "^6.0.2",
+    "@vitest/coverage-v8": "2.1.5",
+    "@vitest/ui": "2.1.5",
+    "eslint": "^9.13.0",
+    "eslint-plugin-prisma": "^0.0.1",
+    "supertest": "^7.0.0",
+    "vitest": "^2.1.5",
+    "vitest-mock-extended": "^2.0.2"
   }
 }
