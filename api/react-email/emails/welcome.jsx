@@ -75,7 +75,7 @@ export const WelcomeEmail = ({ name, email }) => (
     <Preview>Welcome to Snowcap, {name}!</Preview>
     <Body style={styles.main}>
       <Container style={styles.container}>
-        <Img src={`${baseUrl}/static/ski.jpg`} width="100%" />
+        <Img src={`https://cdn.jackcrane.rocks/ski.jpg`} width="100%" />
         <div style={styles.content}>
           <Heading mt={0} as={"h1"} style={styles.heading}>
             Welcome to Snowcap, <b style={{ fontWeight: 600 }}>{name}</b>!

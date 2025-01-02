@@ -22,6 +22,7 @@ const sendEmail = async (options) => {
     data: {
       type: "EMAIL_SENT",
       userId: options.userId,
+      emailId: emailRecord.id,
     },
   });
 

@@ -23,6 +23,7 @@ model User {
 
   emailVerifications EmailVerification[]
   logs Logs[]
+  forgotPasswordTokens ForgotPasswordToken[]
 
   emailPreferences EmailPreferences?
 
@@ -44,8 +45,12 @@ model EmailPreferences {
 
 model Logs {
   id String @id @default(cuid())
+
   userId String?
   user User? @relation(fields: [userId], references: [id])
+
+  emailId String?
+  email Email? @relation(fields: [emailId], references: [id])
 
   type LogType
   ip String?
@@ -64,6 +69,8 @@ model Email {
   userId String?
 
   responses EmailWebhooks[]
+
+  logs Logs[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -94,6 +101,18 @@ model EmailWebhooks {
   updatedAt DateTime @updatedAt
 }
 
+model ForgotPasswordToken {
+  id String @id @default(cuid())
+
+  userId String
+  user User @relation(fields: [userId], references: [id])
+
+  active Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum EmailWebhookType {
   DELIVERY
   OPEN
@@ -106,6 +125,8 @@ enum EmailWebhookType {
 enum LogType {
   USER_CREATED
   USER_LOGIN
+  USER_PASSWORD_RESET_REQUEST
+  USER_PASSWORD_RESET
   EMAIL_SENT
   EMAIL_VERIFIED
 }

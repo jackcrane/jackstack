@@ -73,30 +73,31 @@ export const WelcomeEmail = ({ name, city, regionName, ip }) => (
         fontStyle="semibold"
       />
     </Head>
-    <Preview>New login to Snowcap</Preview>
+    <Preview>Password Reset</Preview>
     <Body style={styles.main}>
       <Container style={styles.container}>
         <Img src={"https://cdn.jackcrane.rocks/ski.jpg"} width="100%" />
         <div style={styles.content}>
           <Heading mt={0} as={"h1"} style={styles.heading}>
-            New login to Snowcap
+            Password Reset
           </Heading>
           <Text>
-            Hi, {name}! We are writing to inform you that someone has
-            successfully logged into your account. If this was not you, please
-            contact us immediately. If this was you, there is nothing to do.
+            Hi, {"{{name}}"}! We are sorry to see you have forgotten your
+            password. Please click the button below to reset your password.
           </Text>
-          <Text>
-            <b>IP Address: </b>
-            {ip}
-            <br />
-            <b>Location: </b>
-            {city}, {regionName}
-          </Text>
+          <Button
+            as="a"
+            href="https://snowcap.jackcrane.rocks/api/auth/reset-password?token={{token}}"
+            style={styles.button}
+          >
+            Reset Password
+          </Button>
           <Text style={styles.or}>
             We value your privacy and security. Please do not reply to this
             email. If you need, you can{" "}
-            <Link href="mailto:support@snowcap.pro">contact us here</Link>.
+            <Link href="mailto:support@snowcap.pro">contact us here</Link>. If
+            you did not request a password reset, please ignore this email. Your
+            account is secure and your password will not be changed.
           </Text>
         </div>
       </Container>
