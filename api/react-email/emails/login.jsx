@@ -7,6 +7,7 @@ import {
   Heading,
   Html,
   Img,
+  Link,
   Preview,
   Text,
 } from "@react-email/components";
@@ -17,12 +18,13 @@ const baseUrl = "";
 /** @type {{ main: import("react").CSSProperties }} */
 const styles = {
   main: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#f7f7f7",
   },
   container: {
     maxWidth: "600px",
     margin: "0 auto",
     border: "1px solid #eee",
+    backgroundColor: "#ffffff",
   },
   content: {
     padding: "20px",
@@ -42,13 +44,12 @@ const styles = {
   or: {
     color: "#8898aa",
     fontSize: "12px",
-    userSelect: "none",
     lineHeight: "16px",
     display: "inline-block",
   },
 };
 
-export const WelcomeEmail = ({ name, email }) => (
+export const WelcomeEmail = ({ name, city, regionName, ip }) => (
   <Html>
     <Head>
       <Font
@@ -72,41 +73,30 @@ export const WelcomeEmail = ({ name, email }) => (
         fontStyle="semibold"
       />
     </Head>
-    <Preview>Welcome to Snowcap, {name}!</Preview>
+    <Preview>New login to Snowcap</Preview>
     <Body style={styles.main}>
       <Container style={styles.container}>
         <Img src={`${baseUrl}/static/ski.jpg`} width="100%" />
         <div style={styles.content}>
           <Heading mt={0} as={"h1"} style={styles.heading}>
-            Welcome to Snowcap, <b style={{ fontWeight: 600 }}>{name}</b>!
+            New login to Snowcap
           </Heading>
           <Text>
-            You have taken the next step in your journey to improving your
-            student experiences. We are so excited to have you on board and
-            can't wait to get you on the snow!
+            Hi, {name}! We are writing to inform you that someone has
+            successfully logged into your account. If this was not you, please
+            contact us immediately. If this was you, there is nothing to do.
           </Text>
           <Text>
-            Snowcap is a fully featured ski school management system that helps
-            ski schools optimize operations, improve student experiences, and
-            make instructors more efficient, effective, and engaged.
+            <b>IP Address: </b>
+            {ip}
+            <br />
+            <b>Location: </b>
+            {city}, {regionName}
           </Text>
-          <Text>
-            Please click the button below to confirm your email and start your
-            snowcap journey.
-          </Text>
-          <Button
-            as="a"
-            href="https://snowcap.jackcrane.rocks/api/auth/verify?token={{token}}"
-            style={styles.button}
-          >
-            Confirm Email
-          </Button>
           <Text style={styles.or}>
-            We verify your email address so we know we can send you emails,
-            updates, and other communications. Your private information remains
-            private, and is not sold or shared with third parties except as
-            required for functionality and interoperability. If you have any
-            questions, please refer to our privary policy or contact us.
+            We value your privacy and security. Please do not reply to this
+            email. If you need, you can{" "}
+            <Link href="mailto:support@snowcap.pro">contact us here</Link>.
           </Text>
         </div>
       </Container>
@@ -117,6 +107,9 @@ export const WelcomeEmail = ({ name, email }) => (
 WelcomeEmail.PreviewProps = {
   name: "Jack Crane",
   email: "jack@jackcrane.rocks",
+  ip: "127.0.0.1",
+  regionName: "California",
+  city: "San Francisco",
 };
 
 export default WelcomeEmail;

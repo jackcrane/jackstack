@@ -6,7 +6,7 @@ import { sendEmail } from "#postmark";
 import Handlebars from "handlebars";
 import { readFileSync } from "fs";
 
-const welcomeEmail = readFileSync("./react-email/out/welcome.hbs", "utf8");
+const welcomeEmail = readFileSync("./react-email/complete/welcome.hbs", "utf8");
 const template = Handlebars.compile(welcomeEmail);
 
 export const post = async (req, res) => {
@@ -42,6 +42,9 @@ export const post = async (req, res) => {
       email,
       password: hashedPassword,
       name,
+      emailPreferences: {
+        create: {},
+      },
     },
   });
 
@@ -49,6 +52,7 @@ export const post = async (req, res) => {
     data: {
       type: LogType.USER_CREATED,
       userId: user.id,
+      ip: req.ip,
     },
   });
 
