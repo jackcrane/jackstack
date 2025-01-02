@@ -89,9 +89,17 @@ cd api && yarn dev
 cd app && yarn start
 ```
 
-6. Open the app in your browser
+6. Replace terminology with your own
+
+> Across the app replace `Snowcap` with your own project name, and change the `instructor`, `dispatcher`, and `manager` roles to your own terminology in the `verifyAuth` function in `api/util/verifyAuth.js` and in the db schema.
+
+7. Open the app in your browser
 
 > Visit [http://localhost:5173](http://localhost:5173) to view the app. The server is running on 3000 but unless you are testing an API endpoint, you should not need to use it.
+
+> [!WARNING]
+> **Stay away from the migrations folder**: When doing codebase-wide find and replace, be sure to exclude the `migrations` folder from your search.
+
 
 ## Testing
 

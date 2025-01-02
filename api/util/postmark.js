@@ -8,15 +8,27 @@ let rawEmailClient = new postmark.ServerClient(process.env.POSTMARK_API_TOKEN);
 
 const sendEmail = async (options) => {
   const schema = z.object({
-    From: z.string().email(),
-    To: z.string().email(),
-    Subject: z.string(),
-    HtmlBody: z.string(),
+    From: z.string({
+      required_error: "From is a required field",
+    }),
+    To: z
+      .string({
+        required_error: "To is a required field",
+      })
+      .email(),
+    Subject: z.string({
+      required_error: "Subject is a required field",
+    }),
+    HtmlBody: z.string({
+      required_error: "HtmlBody is a required field",
+    }),
     userId: z.string(),
   });
   const result = schema.safeParse(options);
 
   if (!result.success) {
+    console.log(options);
+    console.error(result.error.issues);
     throw new Error(result.error.issues);
   }
 

@@ -27,10 +27,18 @@ model User {
 
   emailPreferences EmailPreferences?
 
+  accountType AccountType @default(INSTRUCTOR)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   suspended Boolean @default(false)
+}
+
+enum AccountType {
+  MANAGER
+  DISPATCHER
+  INSTRUCTOR
 }
 
 model EmailPreferences {
