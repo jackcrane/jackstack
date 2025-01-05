@@ -5,6 +5,12 @@ import registerRoutes from "./util/router.js";
 
 const app = express();
 
+// SLow down requests
+app.use(async (req, res, next) => {
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  next();
+});
+
 app.use(
   cors({
     // origin: "http://localhost:3152", // Allow requests from your React app

@@ -2,6 +2,7 @@ import React from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useAuth } from "../hooks";
+import { Auth } from "./routes/auth";
 
 export default () => {
   const { loggedIn, loading, login, user } = useAuth();
@@ -29,7 +30,7 @@ export default () => {
             <></>
           ) : (
             <>
-              <Route path="/" element={<p>Login</p>} />
+              <Route path="/auth" element={<Auth />} />
             </>
           )}
         </Routes>

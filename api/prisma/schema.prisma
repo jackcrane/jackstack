@@ -45,7 +45,7 @@ model EmailPreferences {
   id String @id @default(cuid())
 
   userId String @unique
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   login Boolean @default(true)
 
@@ -57,10 +57,10 @@ model Logs {
   id String @id @default(cuid())
 
   userId String?
-  user User? @relation(fields: [userId], references: [id])
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   emailId String?
-  email Email? @relation(fields: [emailId], references: [id])
+  email Email? @relation(fields: [emailId], references: [id], onDelete: Cascade)
 
   type LogType
   ip String?
@@ -90,7 +90,7 @@ model EmailVerification {
   id String @id @default(cuid())
 
   userId String
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   active Boolean @default(true)
 
   createdAt DateTime @default(now())
@@ -102,7 +102,7 @@ model EmailWebhooks {
   messageId String
 
   emailId String
-  email Email @relation(fields: [emailId], references: [id])
+  email Email @relation(fields: [emailId], references: [id], onDelete: Cascade)
 
   data String
   type EmailWebhookType
@@ -115,7 +115,7 @@ model ForgotPasswordToken {
   id String @id @default(cuid())
 
   userId String
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   active Boolean @default(true)
 

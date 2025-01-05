@@ -10,7 +10,10 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [mutationLoading, setMutationLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [error, setError] = useState(null);
+  const [registered, setRegistered] = useState(true);
 
   const getToken = () => {
     const url = new URL(window.location.href);
@@ -22,10 +25,53 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async () => {
-    const r = await fetch(u("/api/auth/login"));
-    const { url } = await r.json();
-    window.location.href = url + "?RelayState=" + window.location.href;
+  const login = async ({ email, password }) => {
+    setMutationLoading(true);
+    setError(null);
+    console.log("login", { email, password });
+    const r = await fetch(u("/api/auth/login"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (r.ok) {
+      const { token } = await r.json();
+      localStorage.setItem("token", token);
+      setUser(null);
+      fetchUser();
+      emitter.emit("login");
+      setMutationLoading(false);
+    } else {
+      const { message } = await r.json();
+      setError(message);
+      setMutationLoading(false);
+    }
+    setMutationLoading(false);
+  };
+
+  const register = async ({ name, email, password }) => {
+    setMutationLoading(true);
+    setError(null);
+    console.log("register", { name, email, password });
+    const r = await fetch(u("/api/auth/register"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    if (r.ok) {
+      setRegistered(true);
+    } else {
+      const { message } = await r.json();
+      setError(message);
+      setMutationLoading(false);
+    }
+    setMutationLoading(false);
   };
 
   const fetchUser = async () => {
@@ -74,7 +120,19 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, loggedIn }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        login,
+        logout,
+        loggedIn,
+        error,
+        mutationLoading,
+        register,
+        registered,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
