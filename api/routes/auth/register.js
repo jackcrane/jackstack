@@ -32,7 +32,13 @@ export const post = async (req, res) => {
     const result = schema.safeParse({ email, password, name });
 
     if (!result.success) {
-      return res.status(400).json({ message: result.error.issues });
+      const serializedError = result.error.issues
+        .map((issue) => {
+          return issue.message;
+        })
+        .join(", ");
+
+      return res.status(400).json({ message: serializedError });
     }
 
     const existingUser = await prisma.user.findFirst({
@@ -85,4 +91,43 @@ export const post = async (req, res) => {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
+};
+
+// Resend a verification email
+export const put = async (req, res) => {
+  const { email } = req.body;
+
+  const user = await prisma.user.findFirst({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    return res.status(400).json({ message: "Invalid email" });
+  }
+
+  const emailVerificaton = await prisma.emailVerification.create({
+    data: {
+      userId: user.id,
+    },
+  });
+
+  await sendEmail({
+    From: "Snowcap Support <snowcap@jackcrane.rocks>",
+    To: email,
+    Subject: "Verify your email address",
+    HtmlBody: template({ name: user.name, token: emailVerificaton.id }),
+    userId: user.id,
+  });
+
+  await prisma.logs.create({
+    data: {
+      type: LogType.USER_EMAIL_VERIFICATION_RESENT,
+      userId: user.id,
+      ip: req.ip,
+    },
+  });
+
+  return res.status(200).json({ message: "Verification email sent" });
 };

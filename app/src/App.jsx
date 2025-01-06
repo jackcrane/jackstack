@@ -2,9 +2,11 @@ import React from "react";
 import { Toaster } from "react-hot-toast";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useAuth } from "../hooks";
-import { Login } from "./routes/login";
+import { Login } from "./routes/auth/login";
 import { Header } from "../components/header";
 import { Page } from "../components/page";
+import { Register } from "./routes/auth/register";
+import { Verify } from "./routes/auth/verify";
 
 export default () => {
   const { loggedIn, loading, login, user } = useAuth();
@@ -33,6 +35,8 @@ export default () => {
           ) : (
             <>
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/verify" element={<Verify />} />
             </>
           )}
           {/* 404 error */}

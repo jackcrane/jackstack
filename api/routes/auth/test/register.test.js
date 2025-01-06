@@ -32,7 +32,7 @@ describe("/auth/register", () => {
       });
 
       expect(res.status).toBe(400);
-      expect(res.body.message[0].message).toBe("Invalid email");
+      expect(res.body.message).toBe("Invalid email");
 
       const user = await prisma.user.findFirst({
         where: {
@@ -51,9 +51,7 @@ describe("/auth/register", () => {
       });
 
       expect(res.status).toBe(400);
-      expect(res.body.message[0].message).toBe(
-        "Password must be at least 8 characters"
-      );
+      expect(res.body.message).toBe("Password must be at least 8 characters");
 
       const user = await prisma.user.findFirst({
         where: {
@@ -72,9 +70,7 @@ describe("/auth/register", () => {
       });
 
       expect(res.status).toBe(400);
-      expect(res.body.message[0].message).toBe(
-        "Name must be at least 2 characters"
-      );
+      expect(res.body.message).toBe("Name must be at least 2 characters");
 
       const user = await prisma.user.findFirst({
         where: {

@@ -47,6 +47,7 @@
     "eslint-plugin-prisma": "^0.0.1",
     "supertest": "^7.0.0",
     "vitest": "^2.1.5",
-    "vitest-mock-extended": "^2.0.2"
+    "vitest-mock-extended": "^2.0.2",
+    "nodemon": "^3.0.1"
   }
 }

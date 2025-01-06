@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { u } from "../util/url";
 import { emitter } from "../util/mitt";
 import toast from "react-hot-toast";
+import { Link } from "tabler-react-2";
 
 // Create Auth Context
 const AuthContext = createContext();
@@ -15,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState(null);
   const [registered, setRegistered] = useState(true);
+  const [meta, setMeta] = useState(null);
 
   const getToken = () => {
     const url = new URL(window.location.href);
@@ -76,6 +78,52 @@ export const AuthProvider = ({ children }) => {
     setMutationLoading(false);
   };
 
+  const verifyEmail = async (verifyToken) => {
+    setMutationLoading(true);
+    setError(null);
+    const r = await fetch(u("/api/auth/verify?token=" + verifyToken), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (r.ok) {
+      const { token, name } = await r.json();
+      localStorage.setItem("token", token);
+      fetchUser();
+      toast.success(`Email verified, ${name}! We are logging you in now.`);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      window.location.href = "/";
+    } else {
+      const { message, email } = await r.json();
+      setMeta({ email });
+      setError(message);
+      setMutationLoading(false);
+    }
+  };
+
+  const resendVerificationEmail = async ({ email }) => {
+    setMutationLoading(true);
+    setError(null);
+    const r = await fetch(u("/api/auth/register"), {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (r.ok) {
+      toast.success("Verification email sent!");
+      setMutationLoading(false);
+    } else {
+      const { message } = await r.json();
+      setError(message);
+      setMutationLoading(false);
+    }
+  };
+
   const fetchUser = async () => {
     getToken();
 
@@ -134,6 +182,9 @@ export const AuthProvider = ({ children }) => {
         mutationLoading,
         register,
         registered,
+        verifyEmail,
+        resendVerificationEmail,
+        meta,
       }}
     >
       {children}

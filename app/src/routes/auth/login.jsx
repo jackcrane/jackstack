@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { useAuth } from "../../hooks";
+import { useAuth } from "../../../hooks";
 import { Button, Card, Typography, Input, Alert } from "tabler-react-2";
-import { Header } from "../../components/header";
-import { Page } from "../../components/page";
+import { Page } from "../../../components/page";
 import styled from "styled-components";
-import { Grow, Row } from "../../util/Flex";
-import { Spacer } from "../../util/Spacer";
+import { Grow, Row } from "../../../util/Flex";
+import { Spacer } from "../../../util/Spacer";
 const { H1, Text } = Typography;
 
 export const Login = () => {
-  const { login, mutationLoading, error } = useAuth();
+  const { login, mutationLoading, error, meta, resendVerificationEmail } =
+    useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,6 +28,15 @@ export const Login = () => {
           <>
             <Alert variant="danger" title={"Error"}>
               {error}
+              {error ===
+                "Your email is not verified. Please check your email for a verification link." && (
+                <>
+                  <Spacer size={2} />
+                  <Button onClick={() => resendVerificationEmail({ email })}>
+                    Resend verification email
+                  </Button>
+                </>
+              )}
             </Alert>
           </>
         )}

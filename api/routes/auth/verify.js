@@ -16,6 +16,9 @@ export const get = async (req, res) => {
         id: token,
         active: true,
       },
+      include: {
+        user: true,
+      },
     });
 
     if (!emailVerification) {
@@ -24,7 +27,12 @@ export const get = async (req, res) => {
 
     // Make sure the token is less than 15 minutes old
     if (Date.now() - emailVerification.createdAt.getTime() > 15 * 60 * 1000) {
-      return res.status(400).json({ message: "Token expired" });
+      return res
+        .status(400)
+        .json({
+          message: "Token expired",
+          email: emailVerification.user.email,
+        });
     }
 
     await prisma.emailVerification.update({
@@ -71,7 +79,7 @@ export const get = async (req, res) => {
       expiresIn: "12h",
     });
 
-    return res.status(200).json({ token: authtoken });
+    return res.status(200).json({ token: authtoken, name: user.name });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
