@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { u } from "../util/url";
 import { emitter } from "../util/mitt";
+import toast from "react-hot-toast";
 
 // Create Auth Context
 const AuthContext = createContext();
@@ -44,6 +45,7 @@ export const AuthProvider = ({ children }) => {
       fetchUser();
       emitter.emit("login");
       setMutationLoading(false);
+      document.location.href = "/";
     } else {
       const { message } = await r.json();
       setError(message);
@@ -105,6 +107,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     setUser(null);
     setLoggedIn(false);
+    document.location.href = "/login";
   };
 
   useEffect(() => {
