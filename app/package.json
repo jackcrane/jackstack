@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "mitt": "^3.0.1",
+    "moment": "^2.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.5.1",
@@ -17,7 +18,8 @@
     "react-router-dom": "^7.1.1",
     "react-use": "^17.6.0",
     "styled-components": "^6.1.14",
-    "tabler-react-2": "^0.1.51"
+    "swr": "^2.3.0",
+    "tabler-react-2": "0.1.54"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",

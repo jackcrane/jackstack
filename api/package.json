@@ -36,7 +36,9 @@
     "#geolocation": "./util/geolocation.js",
     "#forceError": "./util/tests/forceError.js",
     "#setup": "./util/tests/setup.js",
-    "#verifyAuth": "./util/verifyAuth.js"
+    "#verifyAuth": "./util/verifyAuth.js",
+    "#serializeError": "./util/serializeError.js",
+    "#getChangedKeys": "./util/getChangedKeys.js"
   },
   "devDependencies": {
     "prisma": "6.1.0",

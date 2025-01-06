@@ -1,6 +1,6 @@
 // AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { u } from "../util/url";
+import { authFetch, u } from "../util/url";
 import { emitter } from "../util/mitt";
 import toast from "react-hot-toast";
 import { Link } from "tabler-react-2";
@@ -151,6 +151,40 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
+  const updateUser = async (data) => {
+    setMutationLoading(true);
+    setError(null);
+    const r = await authFetch("/api/auth/me", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+      }),
+    });
+
+    if (r.ok) {
+      const { user } = await r.json();
+      setUser(user);
+      if (!user.emailVerified) {
+        resendVerificationEmail({ email: user.email });
+      }
+      setLoading(false);
+      setMutationLoading(false);
+    } else {
+      const { message } = await r.json();
+      toast.error(message);
+      setError(message);
+      setMutationLoading(false);
+    }
+
+    setLoading(false);
+    setMutationLoading(false);
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
@@ -185,6 +219,7 @@ export const AuthProvider = ({ children }) => {
         verifyEmail,
         resendVerificationEmail,
         meta,
+        updateUser,
       }}
     >
       {children}

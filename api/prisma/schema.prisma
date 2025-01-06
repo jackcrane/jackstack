@@ -18,6 +18,7 @@ model User {
   email String @unique
   password String
   name String
+  phoneNumber String?
 
   emailVerified Boolean @default(false)
 
@@ -64,6 +65,8 @@ model Logs {
 
   type LogType
   ip String?
+
+  data Json?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -138,6 +141,16 @@ enum LogType {
   USER_PASSWORD_RESET_REQUEST
   USER_PASSWORD_RESET
   USER_EMAIL_VERIFICATION_RESENT
+  USER_ACCOUNT_UPDATED
+  USER_EMAIL_PREFERENCES_UPDATED
   EMAIL_SENT
   EMAIL_VERIFIED
+}
+
+model Geolocation {
+  id String @id @default(cuid())
+  ip String @unique
+  city String
+  regionName String
+  createdAt DateTime @default(now())
 }

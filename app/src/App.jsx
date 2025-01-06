@@ -7,6 +7,7 @@ import { Header } from "../components/header";
 import { Page } from "../components/page";
 import { Register } from "./routes/auth/register";
 import { Verify } from "./routes/auth/verify";
+import { UserProfile } from "./routes/auth/me";
 
 export default () => {
   const { loggedIn, loading, login, user } = useAuth();
@@ -31,14 +32,16 @@ export default () => {
       <Router>
         <Routes>
           {loggedIn ? (
-            <></>
+            <>
+              <Route path="/me" element={<UserProfile />} />
+            </>
           ) : (
             <>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/verify" element={<Verify />} />
             </>
           )}
+          <Route path="/verify" element={<Verify />} />
           {/* 404 error */}
           <Route
             path="*"

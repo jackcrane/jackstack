@@ -8,7 +8,7 @@ export const Row = styled.div`
   display: flex;
   flex-direction: row;
   align-items: ${({ align }) => align || "center"};
-  justify-content: ${({ justify }) => justify || "center"};
+  justify-content: ${({ justify }) => justify};
   gap: ${({ gap }) => gap * 8 || 0}px;
 `;
 
