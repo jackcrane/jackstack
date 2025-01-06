@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../../hooks";
 import { Button, Card, Typography, Input, Alert } from "tabler-react-2";
 import { Page } from "../../../components/page";
 import styled from "styled-components";
 import { Grow, Row } from "../../../util/Flex";
 import { Spacer } from "../../../util/Spacer";
+import { useSearchParams } from "react-router-dom";
+import { useSearchParam } from "react-use";
 const { H1, Text } = Typography;
 
 export const Login = () => {
@@ -12,6 +14,8 @@ export const Login = () => {
     useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const from = useSearchParam("from");
 
   return (
     <Page title="Log in">
@@ -39,6 +43,11 @@ export const Login = () => {
               )}
             </Alert>
           </>
+        )}
+        {from === "forgot-password" && (
+          <Alert variant="info" title={"Password reset"}>
+            Your password has been reset. Please log in with your new password.
+          </Alert>
         )}
         <Input
           label="Email"

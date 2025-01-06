@@ -99,6 +99,8 @@ export const UserProfile = () => {
           "USER_ACCOUNT_UPDATED",
           "EMAIL_VERIFIED",
           "USER_EMAIL_PREFERENCES_UPDATED",
+          "USER_PASSWORD_RESET",
+          "USER_PASSWORD_RESET_REQUEST",
         ]}
       />
     </Page>

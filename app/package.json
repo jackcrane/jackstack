@@ -9,6 +9,7 @@
     "build": "vite build"
   },
   "dependencies": {
+    "@uidotdev/usehooks": "^2.4.1",
     "mitt": "^3.0.1",
     "moment": "^2.30.1",
     "react": "^18.2.0",

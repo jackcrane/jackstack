@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [registered, setRegistered] = useState(true);
   const [meta, setMeta] = useState(null);
+  const [forgotPasswordWaiting, setForgotPasswordWaiting] = useState(false);
 
   const getToken = () => {
     const url = new URL(window.location.href);
@@ -192,6 +193,60 @@ export const AuthProvider = ({ children }) => {
     document.location.href = "/login";
   };
 
+  const requestForgotPassword = async ({ email }) => {
+    setMutationLoading(true);
+    setError(null);
+    const r = await fetch(u("/api/auth/reset-password"), {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (r.ok) {
+      const { message } = await r.json();
+      toast.success(message);
+      setMutationLoading(false);
+      setForgotPasswordWaiting(true);
+    } else {
+      const { message } = await r.json();
+      setError(message);
+      setMutationLoading(false);
+    }
+
+    setMutationLoading(false);
+  };
+
+  const confirmForgotPassword = async ({ token, password }) => {
+    setMutationLoading(true);
+    setError(null);
+    const r = await fetch(u("/api/auth/reset-password"), {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token, password }),
+    });
+
+    if (r.ok) {
+      const { message } = await r.json();
+      toast.success(message);
+      setMutationLoading(false);
+      setForgotPasswordWaiting(false);
+      localStorage.removeItem("token");
+      setTimeout(() => {
+        window.location.href = "/login?from=forgot-password";
+      }, 2000);
+    } else {
+      const { message } = await r.json();
+      setError(message);
+      setMutationLoading(false);
+    }
+
+    setMutationLoading(false);
+  };
+
   useEffect(() => {
     window.fetchUser = fetchUser;
     fetchUser();
@@ -220,6 +275,9 @@ export const AuthProvider = ({ children }) => {
         resendVerificationEmail,
         meta,
         updateUser,
+        requestForgotPassword,
+        forgotPasswordWaiting,
+        confirmForgotPassword,
       }}
     >
       {children}

@@ -8,9 +8,13 @@ import { Page } from "../components/page";
 import { Register } from "./routes/auth/register";
 import { Verify } from "./routes/auth/verify";
 import { UserProfile } from "./routes/auth/me";
+import { ForgotPassword } from "./routes/auth/forgot-password";
+import { useFavicon } from "react-use";
+import favicon from "../assets/ico.png";
 
 export default () => {
   const { loggedIn, loading, login, user } = useAuth();
+  useFavicon(favicon);
 
   if (loading) return null;
 
@@ -39,6 +43,7 @@ export default () => {
             <>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
             </>
           )}
           <Route path="/verify" element={<Verify />} />

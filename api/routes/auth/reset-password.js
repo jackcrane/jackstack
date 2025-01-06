@@ -11,10 +11,10 @@ const template = Handlebars.compile(
   readFileSync("../react-email/complete/forgot-password.hbs", "utf8")
 );
 
-export const get = async (req, res) => {
+export const put = async (req, res) => {
   try {
     forceTestError(req);
-    const { email } = req.query;
+    const { email } = req.body;
 
     const schema = z.object({
       email: z
@@ -33,6 +33,8 @@ export const get = async (req, res) => {
         email,
       },
     });
+
+    console.log(user, email);
 
     if (!user) {
       return res.status(400).json({ message: "Invalid email" });
@@ -81,6 +83,11 @@ export const post = async (req, res) => {
 
     if (!passwordResetToken) {
       return res.status(400).json({ message: "Invalid token" });
+    }
+
+    // Make sure the token is less than 15 minutes old
+    if (Date.now() - passwordResetToken.createdAt.getTime() > 15 * 60 * 1000) {
+      return res.status(400).json({ message: "Token expired" });
     }
 
     const schema = z.object({

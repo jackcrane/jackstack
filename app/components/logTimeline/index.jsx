@@ -16,6 +16,10 @@ const IconuserAccountUpdated = ({ size = 18 }) => (
 const IconEmailVerified = ({ size = 18 }) => (
   <Icon i={"mail-check"} size={size} />
 );
+const IconPasswordReset = ({ size = 18 }) => <Icon i={"key"} size={size} />;
+const IconPasswordResetRequest = ({ size = 18 }) => (
+  <Icon i={"key"} size={size} />
+);
 
 const fallback = (str) => {
   // If boolean:
@@ -143,6 +147,37 @@ const switchLogForDisplay = (log) => {
         time: moment(log.createdAt).format(DATETIME_FORMAT),
         icon: IconEmailVerified,
         iconBgColor: "lime",
+      };
+    case "USER_PASSWORD_RESET":
+      return {
+        title: "Password reset",
+        description: (
+          <>
+            <Text className="mb-0">
+              Your password has been reset. You can now log in with your new
+              password. If you did not update your password, change your
+              password immediately and reach out to us.
+            </Text>
+          </>
+        ),
+        time: moment(log.createdAt).format(DATETIME_FORMAT),
+        icon: IconPasswordReset,
+        iconBgColor: "blue",
+      };
+    case "USER_PASSWORD_RESET_REQUEST":
+      return {
+        title: "Password reset requested",
+        description: (
+          <>
+            <Text className="mb-0">
+              A password reset request was sent to your email address. Please
+              check your email for a link to reset your password.
+            </Text>
+          </>
+        ),
+        time: moment(log.createdAt).format(DATETIME_FORMAT),
+        icon: IconPasswordResetRequest,
+        iconBgColor: "blue",
       };
     default:
       return log.type;
