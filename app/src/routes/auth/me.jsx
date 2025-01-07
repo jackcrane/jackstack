@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAuth, useEmailPreferences, useLogs } from "../../../hooks";
 import { Spinner, Typography, Input, Switch, Button } from "tabler-react-2";
-import { Page } from "../../../components/page";
-import { Breadcrumbs } from "../../../components/breadcrumbs";
-import { LogTimeline } from "../../../components/logTimeline";
+import { Page } from "../../../components/page/Page";
+import { Breadcrumbs } from "../../../components/breadcrumbs/Breadcrumbs";
+import { LogTimeline } from "../../../components/logTimeline/LogTimeline";
 import { Icon } from "../../../util/Icon";
 import { Row } from "../../../util/Flex";
+import { sidenavItems } from "../../../components/sidenav/Sidenav";
 const { H1, H2, H3, Text } = Typography;
 
 export const UserProfile = () => {
@@ -24,7 +25,7 @@ export const UserProfile = () => {
   if (loading) return null;
 
   return (
-    <Page title="User Profile">
+    <Page title="User Profile" sidenavItems={sidenavItems("profile")}>
       <Breadcrumbs />
       <H1>User Profile</H1>
       <Input

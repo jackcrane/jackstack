@@ -212,7 +212,13 @@ export const LogTimeline = ({ logTypes }) => {
           {meta?.totalCount} logs
         </Text>
       </Row>
-      <Timeline dense events={logs.map((log) => switchLogForDisplay(log))} />
+      <div
+        style={{
+          opacity: loading ? 0.5 : 1,
+        }}
+      >
+        <Timeline dense events={logs.map((log) => switchLogForDisplay(log))} />
+      </div>
       <Row justify="flex-end" gap={1} align="center">
         {loading && <Spinner size="sm" />}
         <Button onClick={handlePrevPage} disabled={page === 0 || loading}>

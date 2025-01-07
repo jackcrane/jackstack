@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useAuth } from "../../../hooks";
 import { Button, Card, Typography, Input, Alert } from "tabler-react-2";
-import { Header } from "../../../components/header";
-import { Page } from "../../../components/page";
+import { Header } from "../../../components/header/Header";
+import { Page } from "../../../components/page/Page";
 import styled from "styled-components";
 import { Grow, Row } from "../../../util/Flex";
 import { Spacer } from "../../../util/Spacer";
