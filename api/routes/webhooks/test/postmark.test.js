@@ -20,7 +20,7 @@ describe("/webhooks/postmark", () => {
     });
 
     it("Logs the incoming webhook", async () => {
-      const email = await prisma.email.create({
+      await prisma.email.create({
         data: {
           messageId: "test-message-id",
           from: "test@email.com",

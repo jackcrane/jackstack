@@ -2,9 +2,7 @@ import { describe, expect, it } from "vitest";
 import request from "supertest";
 import { app } from "#index";
 import { prisma } from "#prisma";
-import { sendEmail } from "#postmark";
 import { tc } from "#setup";
-import bcrypt from "bcrypt";
 
 describe("/auth/verify", () => {
   describe("GET", () => {

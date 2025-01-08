@@ -7,11 +7,11 @@ import { tc } from "#setup";
 import bcrypt from "bcrypt";
 
 describe("/auth/reset-password", () => {
-  describe("GET", () => {
+  describe("PUT", () => {
     it("Fires a password reset email", async () => {
-      const res = await request(app).get(
-        "/api/auth/reset-password?email=test@email.com"
-      );
+      const res = await request(app).put("/api/auth/reset-password").send({
+        email: "test@email.com",
+      });
 
       expect(res.status).toBe(200);
       expect(res.body.message).toBe("Password reset request sent");
@@ -20,9 +20,9 @@ describe("/auth/reset-password", () => {
     });
 
     it("Returns a 400 error for an invalid email", async () => {
-      const res = await request(app).get(
-        "/api/auth/reset-password?email=none@email.com"
-      );
+      const res = await request(app).put("/api/auth/reset-password").send({
+        email: "none@email.com",
+      });
 
       expect(sendEmail).not.toHaveBeenCalled();
       expect(res.status).toBe(400);
@@ -30,7 +30,7 @@ describe("/auth/reset-password", () => {
     });
 
     it("Returns a 400 error for a missing email", async () => {
-      const res = await request(app).get("/api/auth/reset-password");
+      const res = await request(app).put("/api/auth/reset-password");
 
       expect(sendEmail).not.toHaveBeenCalled();
       expect(res.status).toBe(400);
@@ -39,7 +39,7 @@ describe("/auth/reset-password", () => {
 
     it("Returns a 500 error for an internal server error", async () => {
       const res = await request(app)
-        .get("/api/auth/reset-password?email=test@email.com")
+        .put("/api/auth/reset-password?email=test@email.com")
         .set({ forceError: true });
 
       expect(sendEmail).not.toHaveBeenCalled();
