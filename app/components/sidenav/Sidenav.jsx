@@ -3,7 +3,6 @@ import styles from "./sidenav.module.css";
 import { Button } from "tabler-react-2/dist/button";
 import { Util } from "tabler-react-2";
 import { Icon } from "../../util/Icon";
-import { Link } from "react-router-dom";
 
 export const sidenavItems = (activeText) => {
   const items = [
