@@ -25,6 +25,7 @@ model User {
   emailVerifications EmailVerification[]
   logs Logs[]
   forgotPasswordTokens ForgotPasswordToken[]
+  files File[]
 
   emailPreferences EmailPreferences?
 
@@ -153,4 +154,21 @@ model Geolocation {
   city String
   regionName String
   createdAt DateTime @default(now())
+}
+
+model File {
+  id String @id @default(cuid())
+
+  userId String?
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  key String
+  originalname String
+  mimetype String
+  contentType String
+  size Int /// in bytes
+  location String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
