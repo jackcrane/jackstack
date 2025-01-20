@@ -44,7 +44,8 @@
     "#setup": "./util/tests/setup.js",
     "#verifyAuth": "./util/verifyAuth.js",
     "#serializeError": "./util/serializeError.js",
-    "#getChangedKeys": "./util/getChangedKeys.js"
+    "#getChangedKeys": "./util/getChangedKeys.js",
+    "#file": "./util/file.js"
   },
   "devDependencies": {
     "@types/supertest": "^6.0.2",

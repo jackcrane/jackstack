@@ -15,8 +15,8 @@ export const useLogs = (logTypes, options) => {
     `/api/logs?logTypes=${logTypes.join(",")}&take=${take}&skip=${skip}`,
     fetcher,
     {
-      keepPreviousData: true, // Ensure previous data persists
-      revalidateOnFocus: false, // Optional: avoid re-fetching on focus
+      keepPreviousData: true,
+      revalidateOnFocus: false,
     }
   );
 

@@ -7,6 +7,7 @@ import { LogTimeline } from "../../../components/logTimeline/LogTimeline";
 import { Icon } from "../../../util/Icon";
 import { Row } from "../../../util/Flex";
 import { sidenavItems } from "../../../components/sidenav/Sidenav";
+import { Dropzone } from "../../../components/dropzone/Dropzone";
 const { H1, H2, H3, Text } = Typography;
 
 export const UserProfile = () => {

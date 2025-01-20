@@ -6,10 +6,10 @@ import registerRoutes from "./util/router.js";
 const app = express();
 
 // SLow down requests
-app.use(async (req, res, next) => {
-  await new Promise((resolve) => setTimeout(resolve, 300));
-  next();
-});
+// app.use(async (req, res, next) => {
+//   await new Promise((resolve) => setTimeout(resolve, 300));
+//   next();
+// });
 
 app.use(
   cors({
@@ -36,7 +36,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json());
+app.use(express.json({}));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 await registerRoutes(app, path.join(process.cwd(), "routes"));
 

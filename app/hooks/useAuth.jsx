@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }) => {
   const login = async ({ email, password }) => {
     setMutationLoading(true);
     setError(null);
-    console.log("login", { email, password });
     const r = await fetch(u("/api/auth/login"), {
       method: "POST",
       headers: {
@@ -60,7 +59,6 @@ export const AuthProvider = ({ children }) => {
   const register = async ({ name, email, password }) => {
     setMutationLoading(true);
     setError(null);
-    console.log("register", { name, email, password });
     const r = await fetch(u("/api/auth/register"), {
       method: "POST",
       headers: {

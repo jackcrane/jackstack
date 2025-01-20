@@ -120,3 +120,35 @@ Frontend tests are not currently available.
 Test files are colocated with their respective route files inside of a `test` folder and named `*.test.js`.
 
 [^1]: NOTE: React Email is ~sort of~ supported, but is not really and requires some manual work after the inital setup. The workflow is: (1) Write the email in React, (2) `yarn email:export`, (3) change the extension from `html` to `hbs`, (4) copy the new email template into the `react-email/complete` folder. To prevent having to redo work, instead of using typical React templating, include variables (in this case `name`) as follows: `{"{{name}}"}`.
+
+## Services
+
+### Email
+
+This project uses Postmark for email delivery. See above for instructions on how to set up Postmark.
+
+### Geolocation
+
+This project uses ip-api.com for geolocation. See above for instructions on how to set up ip-api.com.
+
+### File Uploads
+
+This project uses multer for file uploads. Be sure to set up S3 credentials in `.env`. From there, the `upload` middleware in `api/util/file.js` can be used to upload files to S3. It can be implemented in a route like so:
+
+```js
+import { upload } from "#file";
+import { prisma } from "#prisma";
+import { verifyAuth } from "#verifyAuth";
+
+export const post = [
+  verifyAuth(["instructor", "dispatcher", "manager"]),
+  upload,
+  async (req, res) => {
+    const file = req.file;
+    if (!file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+    res.json({ message: "File uploaded successfully", url: file.location });
+  },
+];
+```
