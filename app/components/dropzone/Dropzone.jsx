@@ -30,7 +30,6 @@ export const Dropzone = ({ onSuccessfulUpload = () => {} }) => {
             multiple: true,
           }}
           onRawChange={(e) => {
-            console.log(e.target.files);
             setFiles(e.target.files);
           }}
         />
