@@ -8,7 +8,7 @@ import bcrypt from "bcrypt";
 import { forceTestError } from "#forceError";
 
 const template = Handlebars.compile(
-  readFileSync("../react-email/complete/forgot-password.hbs", "utf8")
+  readFileSync("./react-email/complete/forgot-password.hbs", "utf8")
 );
 
 export const put = async (req, res) => {

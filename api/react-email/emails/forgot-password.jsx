@@ -49,7 +49,7 @@ const styles = {
   },
 };
 
-export const WelcomeEmail = ({ name, city, regionName, ip }) => (
+export const WelcomeEmail = ({ name, token }) => (
   <Html>
     <Head>
       <Font
@@ -82,12 +82,12 @@ export const WelcomeEmail = ({ name, city, regionName, ip }) => (
             Password Reset
           </Heading>
           <Text>
-            Hi, {"{{name}}"}! We are sorry to see you have forgotten your
-            password. Please click the button below to reset your password.
+            Hi, {name}! We are sorry to see you have forgotten your password.
+            Please click the button below to reset your password.
           </Text>
           <Button
             as="a"
-            href="https://snowcap.jackcrane.rocks/api/auth/reset-password?token={{token}}"
+            href={`https://snowcap.jackcrane.rocks/api/auth/reset-password?token=${token}`}
             style={styles.button}
           >
             Reset Password

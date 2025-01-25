@@ -9,7 +9,7 @@ import { readFileSync } from "fs";
 import { getGeolocation } from "#geolocation";
 import { forceTestError } from "#forceError";
 
-const welcomeEmail = readFileSync("../react-email/complete/login.hbs", "utf8");
+const welcomeEmail = readFileSync("./react-email/complete/login.hbs", "utf8");
 const template = Handlebars.compile(welcomeEmail);
 
 dotenv.config();
@@ -41,12 +41,10 @@ export const post = async (req, res) => {
     console.log("User: ", user);
     if (!user.emailVerified) {
       console.log("Email not verified");
-      return res
-        .status(400)
-        .json({
-          message:
-            "Your email is not verified. Please check your email for a verification link.",
-        });
+      return res.status(400).json({
+        message:
+          "Your email is not verified. Please check your email for a verification link.",
+      });
     }
 
     await prisma.logs.create({
