@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [mutationLoading, setMutationLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState(null);
-  const [registered, setRegistered] = useState(true);
+  const [registered, setRegistered] = useState(false);
   const [meta, setMeta] = useState(null);
   const [forgotPasswordWaiting, setForgotPasswordWaiting] = useState(false);
 
