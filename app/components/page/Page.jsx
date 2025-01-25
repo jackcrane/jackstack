@@ -18,6 +18,8 @@ export const Page = ({ children, title, sidenavItems }) => {
           gap: 10,
           padding: 10,
           paddingBottom: 0,
+          maxWidth: 1400,
+          margin: "auto",
         }}
       >
         {sidenavItems && <Sidenav items={sidenavItems} />}
