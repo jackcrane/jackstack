@@ -28,7 +28,7 @@ export const put = [
       .object({
         name: z.string().min(2).optional(),
         email: z.string().email().optional(),
-        phoneNumber: z.string().min(10).optional(),
+        phoneNumber: z.string().min(10).optional().nullable(),
       })
       .strict();
 
