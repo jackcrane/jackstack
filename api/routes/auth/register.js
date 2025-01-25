@@ -68,7 +68,7 @@ export const post = async (req, res) => {
       From: "Snowcap Support <snowcap@jackcrane.rocks>",
       To: email,
       Subject: "Welcome to Snowcap",
-      HtmlBody: render(
+      HtmlBody: await render(
         WelcomeEmail.WelcomeEmail({
           name: user.name,
           token: emailVerificaton.id,

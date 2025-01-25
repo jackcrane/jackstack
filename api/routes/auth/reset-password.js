@@ -46,7 +46,7 @@ export const put = async (req, res) => {
       From: "Snowcap Support <snowcap@jackcrane.rocks>",
       To: email,
       Subject: "Password Reset",
-      HtmlBody: render(
+      HtmlBody: await render(
         ForgotPasswordEmail.ForgotPasswordEmail({
           name: user.name,
           token: passwordResetToken.id,

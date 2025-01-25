@@ -60,7 +60,7 @@ export const post = async (req, res) => {
         From: "Snowcap Support <snowcap@jackcrane.rocks>",
         To: email,
         Subject: "New login to Snowcap",
-        HtmlBody: render(
+        HtmlBody: await render(
           LoginEmail.LoginEmail({ name: user.name, city, regionName, ip })
         ),
         userId: user.id,
