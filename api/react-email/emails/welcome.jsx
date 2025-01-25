@@ -48,7 +48,7 @@ const styles = {
   },
 };
 
-export const WelcomeEmail = ({ name, email }) => (
+export const WelcomeEmail = ({ name, token }) => (
   <Html>
     <Head>
       <Font
@@ -96,7 +96,7 @@ export const WelcomeEmail = ({ name, email }) => (
           </Text>
           <Button
             as="a"
-            href="https://snowcap.jackcrane.rocks/api/auth/verify?token={{token}}"
+            href={`https://snowcap.jackcrane.rocks/api/auth/verify?token=${token}`}
             style={styles.button}
           >
             Confirm Email
@@ -116,7 +116,7 @@ export const WelcomeEmail = ({ name, email }) => (
 
 WelcomeEmail.PreviewProps = {
   name: "Jack Crane",
-  email: "jack@jackcrane.rocks",
+  token: "token",
 };
 
 export default WelcomeEmail;

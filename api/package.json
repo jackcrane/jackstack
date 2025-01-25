@@ -7,10 +7,10 @@
   "scripts": {
     "test": "./scripts/run-integration.sh",
     "bore": "bore local 3000 --to bore.pub",
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "email:export": "cd ../react-email && yarn export",
-    "email:dev": "cd ../react-email && yarn dev",
+    "start": "node --import tsx index.js",
+    "dev": "nodemon --import tsx index.js",
+    "email:export": "cd ./react-email && yarn export",
+    "email:dev": "cd ./react-email && yarn dev",
     "coverage": "yarn test --coverage",
     "lint": "eslint ."
   },

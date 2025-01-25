@@ -1,15 +1,11 @@
 import { sendEmail } from "#postmark";
 import { prisma } from "#prisma";
 import { LogType } from "@prisma/client";
-import Handlebars from "handlebars";
-import { readFileSync } from "fs";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import { forceTestError } from "#forceError";
-
-const template = Handlebars.compile(
-  readFileSync("./react-email/complete/forgot-password.hbs", "utf8")
-);
+import ForgotPasswordEmail from "#emails/forgot-password.jsx";
+import { render } from "@react-email/render";
 
 export const put = async (req, res) => {
   try {
@@ -50,7 +46,12 @@ export const put = async (req, res) => {
       From: "Snowcap Support <snowcap@jackcrane.rocks>",
       To: email,
       Subject: "Password Reset",
-      HtmlBody: template({ name: user.name, token: passwordResetToken.id }),
+      HtmlBody: render(
+        ForgotPasswordEmail.ForgotPasswordEmail({
+          name: user.name,
+          token: passwordResetToken.id,
+        })
+      ),
       userId: user.id,
     });
 

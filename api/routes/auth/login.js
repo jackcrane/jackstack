@@ -4,13 +4,10 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import { sendEmail } from "#postmark";
-import Handlebars from "handlebars";
-import { readFileSync } from "fs";
 import { getGeolocation } from "#geolocation";
 import { forceTestError } from "#forceError";
-
-const welcomeEmail = readFileSync("./react-email/complete/login.hbs", "utf8");
-const template = Handlebars.compile(welcomeEmail);
+import LoginEmail from "#emails/login.jsx";
+import { render } from "@react-email/render";
 
 dotenv.config();
 
@@ -63,7 +60,9 @@ export const post = async (req, res) => {
         From: "Snowcap Support <snowcap@jackcrane.rocks>",
         To: email,
         Subject: "New login to Snowcap",
-        HtmlBody: template({ name: user.name, city, regionName, ip }),
+        HtmlBody: render(
+          LoginEmail.LoginEmail({ name: user.name, city, regionName, ip })
+        ),
         userId: user.id,
       });
     }

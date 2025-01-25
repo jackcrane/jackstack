@@ -49,7 +49,7 @@ const styles = {
   },
 };
 
-export const WelcomeEmail = ({ name, token }) => (
+export const ForgotPasswordEmail = ({ name, token }) => (
   <Html>
     <Head>
       <Font
@@ -105,12 +105,9 @@ export const WelcomeEmail = ({ name, token }) => (
   </Html>
 );
 
-WelcomeEmail.PreviewProps = {
+ForgotPasswordEmail.PreviewProps = {
   name: "Jack Crane",
-  email: "jack@jackcrane.rocks",
-  ip: "127.0.0.1",
-  regionName: "California",
-  city: "San Francisco",
+  token: "1234567890",
 };
 
-export default WelcomeEmail;
+export default ForgotPasswordEmail;
